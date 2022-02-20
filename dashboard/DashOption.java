@@ -1,5 +1,7 @@
 package frc.molib.dashboard;
 
+//TODO: Figure out how to pass in enumeration of options
+
 /**
  * A wrapper class on the WPI SendableChooser class.
  * <p>Provides a simpler and streamlined interface designed to work with DashTables.</p>
@@ -12,6 +14,5 @@ package frc.molib.dashboard;
  */
 @Deprecated
 public class DashOption<OptionType extends Enum<OptionType>> {
-	public DashOption(DashTable parentTable, String key) {
-	}
+	public DashOption(DashTable parentTable, String key) {}
 }
