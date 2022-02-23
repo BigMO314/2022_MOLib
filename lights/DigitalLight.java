@@ -11,6 +11,7 @@ public class DigitalLight {
 	
 	/**
 	 * Constructor using the default PCM ID
+	 * @param moduleType The module type to use
 	 * @param channel The channel on the PCM to control
 	 */
 	public DigitalLight(final PneumaticsModuleType moduleType, int channel) { solController = new Solenoid(moduleType, channel); }

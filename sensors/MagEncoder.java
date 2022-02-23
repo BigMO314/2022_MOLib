@@ -8,6 +8,7 @@ import com.ctre.phoenix.motorcontrol.can.BaseTalon;
 
 /**
  * Represents the Magnetic Encoder attached to one of the CTRE Talon Motor Controllers
+ * @see com.ctre.phoenix.motorcontrol.can.BaseTalon
  * @see com.ctre.phoenix.motorcontrol.can.TalonSRX
  * @see com.ctre.phoenix.motorcontrol.can.TalonFX
  */
@@ -17,7 +18,7 @@ public class MagEncoder implements Sendable{
 	
 	/**
 	 * Constructor
-	 * @param mtrSource The CTRE Talon Motor Montroller the Mag Encoder is attacted to.
+	 * @param mtrSource The CTRE Talon Motor Montroller the Mag Encoder is attached to.
 	 */
 	public MagEncoder(BaseTalon mtrSource) { 
 		this.mtrSource = mtrSource; 
@@ -26,6 +27,7 @@ public class MagEncoder implements Sendable{
 	
 	public double getDistancePerPulse() { return mDistancePerPulse; }
 	public void configDistancePerPulse(double distancePerPulse) { mDistancePerPulse = distancePerPulse; }
+
 	public double getDistance() { return mtrSource.getSelectedSensorPosition(0) * mDistancePerPulse; }
 	public double getRate() { return mtrSource.getSelectedSensorVelocity(0) * 10.0 * mDistancePerPulse; }
 	public void reset() { mtrSource.setSelectedSensorPosition(0, 0, 0); }

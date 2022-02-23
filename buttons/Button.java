@@ -7,7 +7,7 @@ import edu.wpi.first.util.sendable.SendableRegistry;
 /**
  * A non-command based Button class. 
  * <p>Sub-class this and override the {@link #get()} method to determine how the button value is read.</p>
- * @see edu.wpi.first.wpilibj.buttons.Button
+ * @see edu.wpi.first.wpilibj2.command.button.
  */
 public class Button implements Sendable {
 	protected volatile boolean mSendableValue;
@@ -15,9 +15,6 @@ public class Button implements Sendable {
 
 	protected boolean mLastPressed = grab();
 	protected boolean mLastReleased = !grab();
-
-	protected boolean mPressable = !grab();
-	protected boolean mReleasable = grab();
 
 	protected boolean mLastGrab = grab();
 	protected boolean mPressed = false;
@@ -30,7 +27,7 @@ public class Button implements Sendable {
 	public Button() { 
 		mInstanceCount++;
 		SendableRegistry.addLW(this, "Button[" + mInstanceCount + "]");
-		ButtonScheduler.getInstance().addButton(this);
+		ButtonManager.addButton(this);
 	}
 
 	/**
@@ -38,8 +35,9 @@ public class Button implements Sendable {
 	 * @param name Button name as it appears on the table.
 	 */
 	public Button(String name) {
+		mInstanceCount++;
 		SendableRegistry.addLW(this, "Button[" + name + "]");
-		ButtonScheduler.getInstance().addButton(this);
+		ButtonManager.addButton(this);
 	}
 
 	/**
@@ -48,8 +46,9 @@ public class Button implements Sendable {
 	 * @param name Button name as it appears in the table.
 	 */
 	public Button(String subsystem, String name) {
+		mInstanceCount++;
 		SendableRegistry.addLW(this, subsystem, "Button[" + name + "]");
-		ButtonScheduler.getInstance().addButton(this);
+		ButtonManager.addButton(this);
 	}
 	
 	/**
@@ -86,7 +85,7 @@ public class Button implements Sendable {
 
 	private boolean grab() { return get() || mSendableValue; }
 
-	protected void periodic() {
+	protected void updateValues() {
 		boolean currentGrab = grab();
 
 		if (currentGrab && !mLastGrab) mPressed = true;
@@ -97,8 +96,9 @@ public class Button implements Sendable {
 
 	@Override
 	public void initSendable(SendableBuilder builder) {
+		builder.setSmartDashboardType("MOLib Button");
 		builder.setSafeState(() -> mSendableValue = false);
-		builder.addBooleanProperty("value", this::grab, value -> mSendableValue = value);
+		builder.addBooleanProperty("value", this::get, value -> mSendableValue = value);
 		builder.addBooleanProperty("pressed", () -> mLastPressed, null);
 		builder.addBooleanProperty("released", () -> mLastReleased, null);
 	}

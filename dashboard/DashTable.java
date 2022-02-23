@@ -5,22 +5,18 @@ import edu.wpi.first.networktables.NetworkTableEntry;
 import edu.wpi.first.networktables.NetworkTableInstance;
 
 /**
- * A wrapper class on the WPI NetworkTable class.
- * <p>Provides a simplified and streamlined interface for interacting with NetworkTables.</p>
- * 
- * @see edu.wpi.first.networktables.NetworkTable
+ * A simple wrapper class providing a streamlined interface for {@link edu.wpi.first.networktables.NetworkTable}
  */
 public class DashTable {
 	private final NetworkTable mTable;
 	/**
-	 * Construct an instance of a DashTable.
-	 * 
-	 * @param key Identifier for the new DashTable.
+	 * Constructor
+	 * @param key Identifier for the new DashTable
 	 */
 	public DashTable(String key) { mTable = NetworkTableInstance.getDefault().getTable(key); }
 
 	/**
-	 * Deletes all entries and subtables from this DashTable
+	 * Deletes all entries and subtables
 	 */
 	public void clear() { clear(mTable); }
 	private void clear(NetworkTable table) { 
@@ -29,20 +25,16 @@ public class DashTable {
 	}
 
 	/**
-	 * Get or create a subtable with the specified key.
-	 * 
-	 * @param key	Identifier for the new DashTable.
-	 * @return		Subtable created from this DashTable.
+	 * Get or create a subtable with the specified key
+	 * @param key	Identifier for the new DashTable
+	 * @return		Subtable created from this DashTable
 	 */
 	public DashTable getSubTable(String key) { return new DashTable(mTable.getPath() + "/" + key); }
 	
 	/**
-	 * Gets or creates a generic NetworkTableEntry from this DashTable.
-	 * 
+	 * Gets or creates a generic {@link NetworkTableEntry}
 	 * @param key	Identifier for the NetworkTableEntry
-	 * @return		NetworkTableEntry pulled from this DashTable.
-	 * 
-	 * @see edu.wpi.first.networktables.NetworkTableEntry
+	 * @return		NetworkTableEntry pulled from this DashTable
 	 */
-	public NetworkTableEntry getEntry(String key) { return mTable.getEntry(key); }
+	protected NetworkTableEntry getEntry(String key) { return mTable.getEntry(key); }
 }

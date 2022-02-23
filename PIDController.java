@@ -1,17 +1,24 @@
 package frc.molib;
 
 import edu.wpi.first.util.sendable.SendableBuilder;
+
+import java.util.Timer;
+
 import edu.wpi.first.math.MathUtil;
 
 /**
- * A wrapper class on the WPI PIDController
- * <p>Adds an mEnabled flag and restricted output range.</p>
+ * A simple class extending {@link edu.wpi.first.math.controller.PIDController}
+ * that adds the ability to superficially enable/disable the controller, as well as clamp the output of the calculation.
+ * <p><i>Upcoming: timer to ensure target is in range for an appropriate amount of time and not just passing through.</i></p>
  */
+@SuppressWarnings("unused")
 public class PIDController extends edu.wpi.first.math.controller.PIDController {
 	private boolean mEnabled = false;
 
-	private double mMinLimit = Double.NEGATIVE_INFINITY;
-	private double mMaxLimit = Double.POSITIVE_INFINITY;
+	private double mMinOutputLimit = Double.NEGATIVE_INFINITY;
+	private double mMaxOutputLimit = Double.POSITIVE_INFINITY;
+
+	private Timer tmrAtSetpoint = new Timer();
 
 	/**
 	 * Allocates a PIDController with the given constants for Kp, Ki, and Kd and a default period of 0.02 seconds.
@@ -35,12 +42,17 @@ public class PIDController extends edu.wpi.first.math.controller.PIDController {
 	public void disable() { mEnabled = false; }
 
 	public void configOutputRange(double min, double max) {
-		mMinLimit = min;
-		mMaxLimit = max;
+		mMinOutputLimit = min;
+		mMaxOutputLimit = max;
 	}
 
 	@Override 
-	public double calculate(double measurement) { return MathUtil.clamp(super.calculate(measurement), mMinLimit, mMaxLimit); }
+	public double calculate(double measurement) { return MathUtil.clamp(super.calculate(measurement), mMinOutputLimit, mMaxOutputLimit); }
+
+	@Override
+	public boolean atSetpoint() {
+		return super.atSetpoint();
+	}
 
 	@Override 
 	public void initSendable(SendableBuilder builder) {
