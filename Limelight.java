@@ -1,7 +1,8 @@
 package frc.molib;
 
-import frc.molib.dashboard.DashTable;
-import frc.molib.dashboard.DashEntry;
+import edu.wpi.first.networktables.NetworkTable;
+import edu.wpi.first.networktables.NetworkTableInstance;
+import frc.molib.dashboard.Entry;
 
 /**
  * Interface for the Limelight table on NetworkTables
@@ -37,19 +38,19 @@ public final class Limelight {
 		private StreamMode(int value){ this.value = value; }
 	}
 	
-	private static final DashTable tblLimelight = new DashTable("limelight");
+	private static final NetworkTable tblLimelight = NetworkTableInstance.getDefault().getTable("limelight");
 
-	public static final DashEntry<Double>	dshHasTarget = new DashEntry<Double>(tblLimelight, "tv");
-	public static final DashEntry<Double> 	dshPosX = new DashEntry<Double>(tblLimelight, "tx");
-	public static final DashEntry<Double> 	dshPosY = new DashEntry<Double>(tblLimelight, "ty");
-	public static final DashEntry<Double> 	dshWidth = new DashEntry<Double>(tblLimelight, "thor");
-	public static final DashEntry<Double> 	dshHeight = new DashEntry<Double>(tblLimelight, "tver");
-	public static final DashEntry<Double> 	dshArea = new DashEntry<Double>(tblLimelight, "ta");
+	public static final Entry<Double>	dshHasTarget = new Entry<Double>(tblLimelight, "tv");
+	public static final Entry<Double> 	dshPosX = new Entry<Double>(tblLimelight, "tx");
+	public static final Entry<Double> 	dshPosY = new Entry<Double>(tblLimelight, "ty");
+	public static final Entry<Double> 	dshWidth = new Entry<Double>(tblLimelight, "thor");
+	public static final Entry<Double> 	dshHeight = new Entry<Double>(tblLimelight, "tver");
+	public static final Entry<Double> 	dshArea = new Entry<Double>(tblLimelight, "ta");
 	
-	public static final DashEntry<Integer>	dshLEDMode = new DashEntry<Integer>(tblLimelight, "ledMode");
-	public static final DashEntry<Integer>	dshCamMode = new DashEntry<Integer>(tblLimelight, "camMode");
-	public static final DashEntry<Integer>	dshPipeline = new DashEntry<Integer>(tblLimelight, "pipeline");
-	public static final DashEntry<Integer>	dshStreamMode = new DashEntry<Integer>(tblLimelight, "stream");
+	public static final Entry<Integer>	dshLEDMode = new Entry<Integer>(tblLimelight, "ledMode");
+	public static final Entry<Integer>	dshCamMode = new Entry<Integer>(tblLimelight, "camMode");
+	public static final Entry<Integer>	dshPipeline = new Entry<Integer>(tblLimelight, "pipeline");
+	public static final Entry<Integer>	dshStreamMode = new Entry<Integer>(tblLimelight, "stream");
 
 	private Limelight() {}
 
